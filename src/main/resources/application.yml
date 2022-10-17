@@ -1,0 +1,32 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: Gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: account-service
+          uri: http://account-service:9091
+          predicates:
+            - Path=/accounts/**
+          filters:
+            - AuthenticationFilter
+
+        - id: order-service
+          uri: http://order-service:9093
+          predicates:
+            - Path=/orders/**
+          filters:
+            - AuthenticationFilter
+
+        - id: product-service
+          uri: http://product-service:9096
+          predicates:
+            - Path=/products/**
+          filters:
+            - AuthenticationFilter
+jwt:
+  secret: token_secret$$_5546567235789&&&!!23
+  validity: 20
+  authDisabled: true
